@@ -14,7 +14,7 @@ The Online Banking System is a web-based application that allows users to manage
 - **Backend**: Java Servlets, Apache Tomcat.
 - **Frontend**: HTML, CSS, JavaScript.
 - **Database**: MySQL.
-- **Tools**: Eclipse IDE, MySQL Workbench.
+- **Tools**: Eclipse IDE, MySQL.
 
 ## Screenshots
 ![Login Page](screenshots/login.png)
