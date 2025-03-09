@@ -19,7 +19,7 @@ The Online Banking System is a web-based application that allows users to manage
 ## Screenshots
 ![Login Page](screenshots/login.png)
 ![Dashboard](screenshots/dashboard.png)
-![Transfer Funds](screenshots/transfer.png)
+![Customer Register](screenshots/transfer.png)
 
 ## Setup Instructions
 1. **Clone the repository**:
