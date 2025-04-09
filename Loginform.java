@@ -28,7 +28,7 @@ public class Loginform extends HttpServlet {
             return;
         }
 
-        // Validate password (e.g., minimum length, special characters, etc.)
+        
         if (!isValidPassword(password)) {
             message = "Invalid password. Password must be at least 8 characters long and contain at least one special character.";
             resp.sendRedirect("home.html?message=" + java.net.URLEncoder.encode(message, "UTF-8"));
@@ -40,7 +40,7 @@ public class Loginform extends HttpServlet {
             // Create a session for the admin
             HttpSession session = req.getSession();
             session.setAttribute("email", email);
-            session.setAttribute("role", "admin"); // Store the role as "admin"
+            session.setAttribute("role", "admin"); 
 
             // Redirect to admins.html for the specific admin user
             message = "Admin Login Successful!";
