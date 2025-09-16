@@ -23,26 +23,26 @@ public class CustomerDatabases extends HttpServlet {
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
 
-        // List to hold all customer records
+        
         List<CustomerRegisters> customers = new ArrayList<>();
 
-        // Add console logs for debugging
+        
         System.out.println("Starting database connection...");
 
         try {
-            // Database connection
+            
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver loaded successfully!");
 
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankSystem", "root", "sharada");
             System.out.println("Connected to the database successfully!");
 
-            // Query to fetch all customer data
-            String query = "SELECT * FROM customers"; // Adjust table name if necessary
+            
+            String query = "SELECT * FROM customers"; 
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
-            // Populate customer list from ResultSet
+            
             while (rs.next()) {
                 CustomerRegisters customer = new CustomerRegisters(
                     rs.getInt("customer_id"),
@@ -72,15 +72,16 @@ public class CustomerDatabases extends HttpServlet {
             e.printStackTrace();
         }
 
-        // Convert the customer list to JSON
+        
         Gson gson = new Gson();
         String json = gson.toJson(customers);
 
         
         System.out.println("Generated JSON: " + json);
 
-        // Send JSON response
+        
         out.print(json);
         out.flush();
     }
 }
+
