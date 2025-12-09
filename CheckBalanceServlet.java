@@ -17,20 +17,20 @@ import jakarta.servlet.http.HttpSession;
 public class CheckBalanceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Get the ATM PIN from the form
+        
         String atmPin = req.getParameter("atmPin");
 
-        // Variables to store fetched data
+        
         double balance = 0.0;
         String message = "An error occurred. Please try again."; // Default error message
 
-        // Get the logged-in user's email and first name from the session
+        
         HttpSession session = req.getSession();
         String loggedInEmail = (String) session.getAttribute("email");
         String firstName = (String) session.getAttribute("firstName");
 
         if (loggedInEmail == null || firstName == null) {
-            // If no session, redirect to login page
+            
             resp.sendRedirect("home.html");
             return;
         }
@@ -97,4 +97,5 @@ public class CheckBalanceServlet extends HttpServlet {
                              "&message=" + java.net.URLEncoder.encode(message, "UTF-8");
         resp.sendRedirect(redirectURL);
     }
+
 }
