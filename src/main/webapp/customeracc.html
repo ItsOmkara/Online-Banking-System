@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bebas+Neue&family=Cabin:ital,wght@0,400..700;1,400..700&family=Playwrite+AU+SA:wght@100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+    /* General Styles */
+body {
+    background: linear-gradient(180deg, rgb(53, 141, 250), rgb(34, 63, 108));
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #6610f2;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+    padding: 10px 20px;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+    font-size: 16px;
+    margin: 0 5px;
+}
+
+.navbar-brand img {
+    width: 50px;
+    height: auto;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    background-color: white;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+/* Hero Section */
+.bank {
+    background-image: url("https://www.shutterstock.com/image-vector/online-banking-login-protection-concept-600nw-2125197293.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 92vh;
+   
+}
+
+.header-prt {
+    position: relative;
+    width: 500px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    top:8%;
+}
+
+.header-prt h1 {
+    font-size: 60px;
+    margin: 15px 0;
+    font-family: "Bebas Neue", serif;
+    font-weight: 400;
+    font-style: normal;
+    position: relative;
+    top:15%;
+   left: 13%;
+}
+
+/* Form Container */
+.form-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: none;
+}
+
+.form-container.active {
+    display: block;
+}
+
+/* Overlay */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* Form Inputs */
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Success and Error Messages */
+.success {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.error {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Transaction History Modal */
+#transactionHistory {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 90%; /* Adjusted width for smaller screens */
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    font-family: "Bebas Neue", serif;
+    font-weight: 200;
+    font-style: normal;
+    font-size: 16px; /* Reduced font size for smaller screens */
+}
+
+#transactionHistory.active {
+    display: block;
+}
+
+/* Transaction Table */
+#transactionTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#transactionTable th,
+#transactionTable td {
+    padding: 8px; /* Reduced padding for smaller screens */
+    border: 1px solid #ddd;
+    font-size: 14px; /* Reduced font size for smaller screens */
+}
+
+#transactionTable thead {
+    background-color: #f2f2f2;
+}
+
+#transactionTable tbody tr:hover {
+    background-color: #f9f9f9;
+}
+#closeTransaction:hover{
+  color: darkred;
+}
+/* Responsive Design for Transaction Table */
+@media screen and (max-width: 600px) {
+    #transactionHistory {
+        width: 95%; /* Further reduce width for very small screens */
+        padding: 10px; /* Reduce padding for smaller screens */
+    }
+
+    #transactionTable th,
+    #transactionTable td {
+        padding: 6px; /* Further reduce padding for very small screens */
+        font-size: 12px; /* Further reduce font size for very small screens */
+    }
+
+    #transactionTable {
+        display: block;
+        overflow-x: auto; /* Add horizontal scroll for very small screens */
+    }
+}
+
+/* Account Details Section */
+#formContainerssss {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: none;
+    font-family: "Bebas Neue", serif;
+    font-weight: 200;
+    font-style: normal;
+    font-size: 20px;
+}
+
+#formContainerssss.active {
+    display: block;
+}
+
+/* Change PIN Form */
+#changePinForm {
+    margin-top: 20px;
+    display: none;
+}
+
+#changePinForm input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#changePinForm button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#changePinMessage {
+    margin-top: 10px;
+    font-size: 16px;
+}
+#fullname{
+  color: orange;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 804px) and (min-width: 360px) {
+    .bank {
+        background-position: 65% center;
+        height: 900px;
+    }
+
+    .header-prt h1 {
+        font-size: 45px;
+        margin-left: 98px;
+        position: relative;
+        font-size: 50px;
+        top:40%;
+        left:-22%;
+    }
+}
+    
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="https://w7.pngwing.com/pngs/223/204/png-transparent-bank-logo-bank-saving-bank-pic-building-structure-bank-thumbnail.png" alt="Bank Logo"> Online Banking System
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item"><a class="nav-link" onclick="showWithdrawForm()" href="#">Withdraw <br>Amount</a></li>
+              <li class="nav-item"><a class="nav-link" onclick="showDepositForm()" href="#">Deposit <br> Amount</a></li>
+              <li class="nav-item"><a class="nav-link" onclick="showTransferForm()" href="#">Account <br> Transfer</a></li>
+              <li class="nav-item"><a class="nav-link" onclick="showBalanceForm()" href="#">Check<br> Balance</a></li>
+              <li class="nav-item"><a class="nav-link" onclick="showFetchForm()"href="#">Fetch Account <br> Data</a></li>
+              <li class="nav-item"><a class="nav-link" onclick = "showTransactionHistory()"href="#">Transaction<br> History</a></li>
+            </ul>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+               <a href="home.html"><button class="btn btn-primary me-md-2" type="button">Logout</button></a>
+            </div>
+          </div>
+        </div>
+    </nav>
+    <div id="messageDiv" style="text-align: center; height: 50px; padding: 15px; display:none;"></div>
+    <div class="overlay" id="overlay"></div>
+    <div id="formContainer" class="form-container">
+    <form action = "withdraw" method = "post" id="WithdrawForm">
+      <h2>Withdarw Amount!</h2>
+      <input type="text" name = "amount" id="Withdraw" placeholder="Amount" required />
+      <input type="password" name = "atmPin" id="pin" placeholder="Enter pin.." required />
+      <button type="submit">Withdarw</button>
+    </form>  
+    </div>
+    <div id="formContainers" class="form-container">
+      <form action = "deposit" method = "post" id="DepositForm">
+        <h2>Deposit Amount!</h2>
+        <input type="text" name = "amount" id="Withdraw" placeholder="Amount" required />
+        <input type="password" name = "atmPin" id="pin" placeholder="Enter pin.." required />
+        <button type="submit">Deposit</button>
+      </form>
+    </div> 
+    <div id="formContainerss" class="form-container">
+      <form action = "transfer" method = "post" id="TransferForm">
+        <h2>Account Transfer!</h2>
+        <input type="text" name = "accountNumber" id="Transfer" placeholder="Account number.." required />
+        <input type="text" name = "amount" id="Withdraw" placeholder="Amount" required />
+        <input type="password" name = "atmPin" id="pin" placeholder="Enter pin.." required />
+        <button type="submit">Account transfer</button>
+      </form>
+    </div> 
+  <div id="formContainersss" class="form-container">
+  <form action="CheckBalanceServlet" method="post">
+    <h3>Total Balance</h3>
+    <input type="password" name="atmPin" id="pin" placeholder="Enter pin.." required />
+    <button type="submit" id="checkBalanceBtn">Check Balance</button>
+  </form>
+  <!-- Balance display (hidden by default) -->
+   <div id="totalbalance" style="display: none;">
+     Total balance in the account is: Rs <span id="amount"></span>
+   </div>
+  </div>
+  <div id="formContainerssss" class="form-container">
+  <h3>Account Details</h3>
+  <div id="fname">First Name: <span id="fnames"></span></div>
+  <div id="lname">Last Name: <span id="lnames"></span></div>
+  <div id="mobno">Mobile Number: <span id="mbnos"></span></div>
+  <div id="branch">Branch: <span id="branches"></span></div>
+  <div id="cardno">Card Number: <span id="cardnos"></span></div>
+  <div id="pin">ATM Pin: <span id="pins"></span></div>
+  <div id="acctype">Account Type: <span id="acctypes"></span></div>
+  <div id="errorMessage" style="color: red;"></div>
+  
+  <!-- Add a "Change PIN" button -->
+  <button onclick="showChangePinForm()">Change PIN</button>
+  <button id="applyCheckbookBtn" onclick="applyForCheckbook()">Apply for Checkbook</button>
+  <div id="applyCheckbookMessage" style="margin-top: 10px;"></div>
+
+  <!-- Change PIN Form (hidden by default) -->
+  <div id="changePinForm" style="display: none; margin-top: 20px;">
+    <h4>Change ATM PIN</h4>
+    <input type="password" id="oldPin" placeholder="Enter Old PIN" required />
+    <input type="password" id="newPin" placeholder="Enter New PIN" required />
+    <input type="password" id="confirmNewPin" placeholder="Confirm New PIN" required />
+    <button onclick="submitChangePin()">Submit</button>
+    <div id="changePinMessage" style="margin-top: 10px;"></div>
+  </div>
+  </div>    
+  
+  <div id="transactionHistory" class="form-containers">
+  <span id="closeTransaction" style="display: flex; justify-content: end; font-size: 35px; cursor: pointer; color: red; " onclick = "closeTransactionHistory()"  class="close-btn">&times;</span>
+  <h3>Transaction History</h3>
+  <table id="transactionTable">
+    <thead>
+      <tr>
+        <th>Transaction ID</th>
+        <th>Amount</th>
+        <th>Card Number</th>
+        <th>Transaction Type</th>
+        <th>Transaction Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rows will be populated dynamically -->
+    </tbody>
+  </table>
+</div>
+  
+  
+    <!-- Hero Section -->
+    <div class="bank" >
+        <div class="header-prt">
+            <h1>Withdraw, Deposit, and Transfer</h1>
+            <h1>Money in a Safe and Secure Way</h1>
+            <h1>Welcome, <span id="fullname">User</span>!</h1>
+        </div>
+    </div>
+
+    <!-- JavaScript to Fetch Query Parameter -->
+    <script>
+    // Function to get query parameters
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Set the fullname dynamically
+    const first_name = getQueryParam("first_name"); // Get the first_name parameter
+    if (first_name) {
+        const fullnameSpan = document.getElementById("fullname");
+        fullnameSpan.textContent = decodeURIComponent(first_name); // Decode and display the first name
+    }
+    
+    //Message//
+    function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+    }
+    
+    const message = getQueryParam("message");
+    if (message) {
+        const messageDiv = document.getElementById("messageDiv");
+        const decodedMessage = decodeURIComponent(message); // Decode the message
+        messageDiv.textContent = decodedMessage;
+
+        // Add a success or error class based on the message
+        if (decodedMessage.toLowerCase().includes("success")) {
+            messageDiv.classList.add("success"); // Add success class
+            messageDiv.classList.remove("error"); // Remove error class (if any)
+        } else {
+            messageDiv.classList.add("error"); // Add error class
+            messageDiv.classList.remove("success"); // Remove success class (if any)
+        }
+
+        messageDiv.style.display = "block"; // Show the message
+
+        // Hide the message after 3 seconds
+        setTimeout(() => {
+            messageDiv.style.display = "none";
+        }, 3000);
+    }
+    
+    function showWithdrawForm() {
+    const formContainer = document.getElementById('formContainer');
+    const overlay = document.getElementById('overlay');
+    formContainer.classList.add('active');
+    overlay.classList.add('active');
+}
+// Function to hide the withdraw form
+    const overlay = document.getElementById('overlay');
+    overlay.addEventListener('click', () => {
+    document.getElementById('formContainer').classList.remove('active');
+    overlay.classList.remove('active');
+    });
+    function showDepositForm() {
+    const formContainers = document.getElementById('formContainers');
+    const overlays = document.getElementById('overlay');
+    formContainers.classList.add('active');
+    overlays.classList.add('active');
+}
+// Function to hide the Deposit form
+    const overlays = document.getElementById('overlay');
+    overlays.addEventListener('click', () => {
+    document.getElementById('formContainers').classList.remove('active');
+    overlays.classList.remove('active');
+    });
+    function showTransferForm() {
+    const formContainers = document.getElementById('formContainerss');
+    const overlayss = document.getElementById('overlay');
+    formContainers.classList.add('active');
+    overlayss.classList.add('active');
+}
+// Function to hide the Deposit form
+    const overlayss = document.getElementById('overlay');
+    overlayss.addEventListener('click', () => {
+    document.getElementById('formContainerss').classList.remove('active');
+    overlayss.classList.remove('active');
+    });
+    function showBalanceForm() {
+    const formContainers = document.getElementById('formContainersss');
+    const overlaysss = document.getElementById('overlay');
+    formContainers.classList.add('active');
+    overlayss.classList.add('active');
+}
+// Function to hide the Deposit form
+    const overlaysss = document.getElementById('overlay');
+    overlaysss.addEventListener('click', () => {
+    document.getElementById('formContainersss').classList.remove('active');
+    overlaysss.classList.remove('active');
+    });
+    function showFetchForm(){
+    const formContainers = document.getElementById('formContainerssss');
+    const overlaysss = document.getElementById('overlay');
+    formContainers.classList.add('active');
+    overlayss.classList.add('active');
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Fetch and display account data when the form is opened
+     // Get the email parameter
+    const email = getQueryParam("email");
+    console.log("Email from query parameters:", email); // Get the email parameter
+    if (email) {
+        fetchAccountData(email); // Fetch account data using the email
+    }
+}
+// Function to hide the detailsform
+    const overlayssss = document.getElementById('overlay');
+    overlayssss.addEventListener('click', () => {
+    document.getElementById('formContainerssss').classList.remove('active');
+    overlayssss.classList.remove('active');
+    });
+    
+    
+    //Check Balance//
+    
+// Function to get query parameters
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+// Check for balance or error in the URL
+const balance = getQueryParam("balance");
+const error = getQueryParam("error");
+
+if (balance) {
+    // Display the balance
+    showBalanceDisplay(balance);
+} else if (error) {
+    // Display an error message
+    alert(error);
+}
+
+// Clear query parameters after displaying the balance or error
+clearQueryParams();    
+    
+    
+    // Function to show the balance display
+function showBalanceDisplay(balance) {
+    const balanceDisplay = document.getElementById("totalbalance");
+    const amountSpan = document.getElementById("amount");
+
+    // Update the balance and show the display
+    amountSpan.textContent = balance;
+    balanceDisplay.style.display = "block";
+}
+
+// Function to reset the balance display
+function resetBalanceDisplay() {
+    const balanceDisplay = document.getElementById("totalbalance");
+    const amountSpan = document.getElementById("amount");
+
+    // Clear the balance and hide the display
+    amountSpan.textContent = "";
+    balanceDisplay.style.display = "none";
+}
+
+// Event listener for the "Check Balance" button
+document.getElementById("checkBalanceBtn").addEventListener("click", function (event) {
+    // Prevent the form from submitting (for demonstration purposes)
+    event.preventDefault();
+
+    // Simulate fetching the balance (replace this with actual form submission)
+    const balance = 800.00; // Replace with the actual balance fetched from the servlet
+    showBalanceDisplay(balance);
+});
+
+// Reset the balance display when other links are clicked
+const navLinkss = document.querySelectorAll(".navbar-nav .nav-link");
+navLinks.forEach(link => {
+    link.addEventListener("click", function () {
+        resetBalanceDisplay();
+    });
+});
+
+
+// Fetch Account Data//
+
+async function fetchAccountData(email) {
+    try {
+        // Fetch account data from the backend using a GET request
+        const response = await fetch(`http://localhost:8080/OnlineBankingSystem/FetchAccountDataServlet?email=${encodeURIComponent(email)}`);
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch account data');
+        }
+
+        // Parse the JSON response
+        const accountData = await response.json();
+        console.log('Fetched account data:', accountData);
+
+        if (accountData.errorMessage) {
+            // Display error message
+            document.getElementById("errorMessage").textContent = accountData.errorMessage;
+        } else {
+            // Populate the form with the fetched data
+            document.getElementById("fnames").textContent = accountData.firstName;
+            document.getElementById("lnames").textContent = accountData.lastName;
+            document.getElementById("mbnos").textContent = accountData.mobileNumber;
+            document.getElementById("branches").textContent = accountData.branch;
+            document.getElementById("cardnos").textContent = accountData.cardNo;
+            document.getElementById("pins").textContent = accountData.atmPin;
+            document.getElementById("acctypes").textContent = accountData.accountType;
+        }
+    } catch (error) {
+        console.error('Error fetching account data:', error);
+        document.getElementById("errorMessage").textContent = "An error occurred while fetching account data.";
+    }
+    
+    
+}
+//Function to show the transaction history modal
+function showTransactionHistory() {
+    const transactionHistoryDiv = document.getElementById('transactionHistory');
+    const overlay = document.getElementById('overlay');
+
+    // Show the modal and overlay
+    //transactionHistoryDiv.classList.add('active');//
+    transactionHistoryDiv.style.display = 'block';
+    
+    overlay.classList.add('active');
+
+    // Fetch and populate transaction history
+    fetchTransactionHistory();
+}
+
+// Function to fetch and display transaction history
+async function fetchTransactionHistory() {
+    try {
+        // Fetch transaction history from the server
+        const response = await fetch('http://localhost:8080/OnlineBankingSystem/TransactionHistoryServlet');
+        if (!response.ok) {
+            throw new Error('Failed to fetch transaction history');
+        }
+
+        // Parse the JSON response
+        const transactions = await response.json();
+
+        // Get the table body
+        const tbody = document.querySelector('#transactionTable tbody');
+
+        // Clear existing rows
+        tbody.innerHTML = '';
+
+        // Populate the table with transaction data
+        transactions.forEach(transaction => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${transaction.transactionId}</td>
+                <td>${transaction.amount}</td>
+                <td>${transaction.cardNo}</td>
+                <td>${transaction.transactionType}</td>
+                <td>${transaction.transactionDate}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error fetching transaction history:', error);
+    }
+}
+
+// Function to close the transaction history modal
+function closeTransactionHistory() {
+    const modal = document.getElementById('transactionHistory');
+    const overlay = document.getElementById('overlay');
+
+    // Hide the modal and overlay
+    modal.style.display = 'none';
+    
+}
+
+//Function to show the "Change PIN" form
+function showChangePinForm() {
+    const changePinForm = document.getElementById('changePinForm');
+    changePinForm.style.display = 'block';
+}
+
+// Function to submit the "Change PIN" form
+async function submitChangePin() {
+    const oldPin = document.getElementById('oldPin').value;
+    const newPin = document.getElementById('newPin').value;
+    const confirmNewPin = document.getElementById('confirmNewPin').value;
+    const changePinMessage = document.getElementById('changePinMessage');
+
+    // Validate inputs
+    if (!oldPin || !newPin || !confirmNewPin) {
+        changePinMessage.textContent = "All fields are required.";
+        changePinMessage.style.color = "red";
+        return;
+    }
+
+    if (newPin !== confirmNewPin) {
+        changePinMessage.textContent = "New PIN and Confirm PIN do not match.";
+        changePinMessage.style.color = "red";
+        return;
+    }
+
+    // Get the card number from the account details
+    const cardNo = document.getElementById('cardnos').textContent;
+
+    try {
+        // Send a POST request to the backend to change the PIN
+        const response = await fetch('http://localhost:8080/OnlineBankingSystem/ChangePinServlet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cardNo: cardNo,
+                oldPin: oldPin,
+                newPin: newPin,
+            }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            // PIN change successful
+            changePinMessage.textContent = result.message;
+            changePinMessage.style.color = "green";
+
+            // Update the displayed PIN
+            document.getElementById('pins').textContent = newPin;
+
+            // Clear the form fields
+            document.getElementById('oldPin').value = '';
+            document.getElementById('newPin').value = '';
+            document.getElementById('confirmNewPin').value = '';
+        } else {
+            // PIN change failed
+            changePinMessage.textContent = result.message;
+            changePinMessage.style.color = "red";
+        }
+    } catch (error) {
+        console.error('Error changing PIN:', error);
+        changePinMessage.textContent = "An error occurred while changing the PIN.";
+        changePinMessage.style.color = "red";
+    }
+}
+
+async function applyForCheckbook() {
+    const applyCheckbookMessage = document.getElementById('applyCheckbookMessage');
+    const cardNo = document.getElementById('cardnos').textContent; // Get the card number
+
+    if (!cardNo) {
+        applyCheckbookMessage.textContent = "Card number not found.";
+        applyCheckbookMessage.style.color = "red";
+        return;
+    }
+
+    try {
+        // Send a POST request to the backend to apply for a checkbook
+        const response = await fetch('http://localhost:8080/OnlineBankingSystem/applyForCheckbook', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cardNo: cardNo }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            // Checkbook application successful
+            applyCheckbookMessage.textContent = result.message;
+            applyCheckbookMessage.style.color = "green";
+        } else {
+            // Checkbook application failed
+            applyCheckbookMessage.textContent = result.message;
+            applyCheckbookMessage.style.color = "red";
+        }
+    } catch (error) {
+        console.error('Error applying for checkbook:', error);
+        applyCheckbookMessage.textContent = "An error occurred while applying for the checkbook.";
+        applyCheckbookMessage.style.color = "red";
+    }
+}
+
+</script>
+</body>
+</html>
